@@ -7,8 +7,9 @@ from app import app, db, User, Product
 def client():
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-    app.config['SECRET_KEY'] = 'test-key'
-    app.config['JWT_SECRET'] = 'test-jwt'
+    import os
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'test-key')
+    app.config['JWT_SECRET'] = os.environ.get('JWT_SECRET', 'test-jwt')
     
     with app.test_client() as client:
         with app.app_context():
